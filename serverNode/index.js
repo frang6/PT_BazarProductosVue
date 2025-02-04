@@ -13,21 +13,35 @@ app.use(express.json()); // Permite recibir JSON en las peticiones
 // Ruta de prueba
 app.get("/", (req, res) => {
   res.send("Servidor funcionando correctamente 🚀");
+  console.log("Productos cargados:", loadProducts());
 });
 
-// Función para cargar productos desde el archivo JSON
 function loadProducts() {
+  const filePath = path.join(__dirname, "data", "products.json");
+  console.log("📌 Intentando leer archivo:", filePath);
+
   try {
-    // Establece la ruta absoluta hacia el archivo products.json dentro de la carpeta data
-    const filePath = path.join(__dirname, "../data", "products.json");
+    // Verificar si el archivo existe
+    if (!fs.existsSync(filePath)) {
+      console.error("🚨 El archivo products.json no se encuentra en la ruta.");
+      return [];
+    }
 
-
-    // Leer el archivo y parsearlo
     const data = fs.readFileSync(filePath, "utf8");
-    return JSON.parse(data); // Convertir el contenido en un objeto JavaScript
+    console.log("📌 Contenido del archivo JSON:", data); // Ver el contenido del archivo antes de parsearlo
+
+    const jsonData = JSON.parse(data);
+    
+    // Asegurarse de que la propiedad "products" exista y sea un array
+    if (!Array.isArray(jsonData.products)) {
+      console.error("🚨 La propiedad 'products' no es un array:", jsonData.products);
+      return [];
+    }
+
+    return jsonData.products; // Devolver el array de productos
   } catch (error) {
-    console.error("Error al leer el archivo:", error);
-    return []; // Si hay un error, devolver un array vacío
+    console.error("🚨 Error al leer el archivo JSON:", error.message);
+    return [];
   }
 }
 
