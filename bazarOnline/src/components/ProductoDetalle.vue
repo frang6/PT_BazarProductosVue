@@ -1,42 +1,50 @@
 <template>
-
     <header>
         <img src="../assets/img/logo.png" alt="Logo" @click="volverAInicio" class="logo" />
         <Busqueda v-model="busqueda" />
     </header>
-
     <nav>
-        <button @click="volverAtras" class="volver">⬅ Volver</button>
+        <BotonVolverAtras @click="volverAtras"/>
+        <img src="../assets/img/carrito.png" @click="verCarrito" class="logoCarrito">
     </nav>
 
-    <div class="detalle-producto">
-        
-        <div v-if="loading">Cargando producto...</div>
-        <div v-else-if="error" class="error">{{ error }}</div>
-        <div v-else-if="producto">
-            <img :src="producto.thumbnail" :alt="producto.title" class="imagen-detalle" />
+    <main>
+        <div v-if="producto" class="detalle-producto">
+            <div class="contenedorImagenes">
+                <img :src="producto.images[0]" :alt="producto.title" class="imagen-detalle" />
+                <div class="imagenes-secundarias">
+                    <span v-for="(img, index) in producto.images.slice(1, 4)" :key="index" class="img-detalle">
+                        <img :src="img" :alt="producto.title" />
+                    </span>
+                </div>
+            </div>
             <h1>{{ producto.title }}</h1>
-            <p>{{ producto.description }}</p>
             <strong>Precio: {{ producto.price }}€</strong>
-            <div class="rating">⭐ {{ producto.rating }}</div>
-            <button class="agregar-carrito" @click="agregarAlCarrito">🛒 Añadir al carrito</button>
+            <span class="rating">⭐ {{ producto.rating }}</span>
+            <p>{{ producto.description }}</p>
+            <BotonAñadirCarrito @click="añadirAlCarrito" />
         </div>
-    </div>
+    </main>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { useToast } from "vue-toastification";
 import Busqueda from "./Busqueda.vue";
 import axios from "axios";
+import BotonAñadirCarrito from "./BotonAñadirCarrito.vue";
+import BotonVolverAtras from "./BotonVolverAtras.vue";
 
 const route = useRoute();
 const router = useRouter();
+const toast = useToast();
 const busqueda = ref(route.query.q?.toString() || ""); 
 
 const producto = ref<any>(null);
 const loading = ref(false);
 const error = ref<string | null>(null);
+const carrito = ref(JSON.parse(localStorage.getItem("carrito")) || []);
 
 const fetchProducto = async () => {
     loading.value = true;
@@ -52,6 +60,12 @@ const fetchProducto = async () => {
     }
 };
 
+const añadirAlCarrito = () => {
+    carrito.value.push({ ...producto.value });
+    localStorage.setItem("carrito", JSON.stringify(carrito.value));
+    toast.success("Producto añadido al carrito");
+};
+
 const volverAInicio = () => {
     router.push({ path: "/" });
 };
@@ -60,18 +74,25 @@ const volverAtras = () => {
     router.back();
 };
 
-const agregarAlCarrito = () => {
-    alert(`${producto.value.title} añadido al carrito 🛒`);
-};
+const verCarrito = () =>{
+    router.push({path:"/carrito"})
+}
 
 onMounted(fetchProducto);
 </script>
 
 <style scoped>
-
 .logo {
     cursor: pointer; 
     width: 100px; 
+}
+.volverAtras{
+    margin-top: -10px;
+}
+.logoCarrito{
+    cursor: pointer;
+    width: 60px;
+    display: flex;
 }
 
 header{
@@ -86,15 +107,16 @@ header{
 .detalle-producto {
     text-align: center;
     padding: 20px;
+    background: white;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.volver {
-    margin-bottom: 10px;
-    padding: 5px 10px;
-    cursor: pointer;
-    background: #ddd;
-    border: none;
-    border-radius: 5px;
+.contenedorImagenes {
+    display: flex;
+    align-items: center;
 }
 
 .imagen-detalle {
@@ -103,20 +125,42 @@ header{
     margin-bottom: 10px;
 }
 
-.agregar-carrito {
-    background: #ff9800;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.imagenes-secundarias {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
 }
 
-.agregar-carrito:hover {
-    background: #e68900;
+.img-detalle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ccc;
 }
 
-.error {
-    color: red;
+.img-detalle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+p{
+    font-size: 14px;
+    color: #333;
+    margin: 50px 10px;
+}
+
+h1{
+    margin: 20px;
+}
+
+strong {
+    margin: 20px;
 }
 </style>

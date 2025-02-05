@@ -27,9 +27,15 @@ const mostrarVistaDetallada = () => {
     border: 1px solid #ddd;
     border-radius: 10px;
     transition: transform 0.2s ease-in-out;
+    text-align: center;
 }
 
 .product-card:hover {
     transform: scale(1.05);
+}
+p{
+    font-size: 14px;
+    color: #333;
+    margin: 5px 10px;
 }
 </style>

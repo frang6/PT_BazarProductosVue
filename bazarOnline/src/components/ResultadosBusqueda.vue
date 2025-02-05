@@ -25,7 +25,7 @@
         
         
         <div class="products-container">
-            <ProductCard 
+            <CartaProducto 
                 v-for="producto in productos" 
                 :key="producto.id" 
                 :producto="producto" 
@@ -41,7 +41,7 @@ import { ref, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 import Busqueda from "./Busqueda.vue";
-import ProductCard from "./CartaProducto.vue";
+import CartaProducto from "./CartaProducto.vue";
 
 import MostrarCategorias from "./MostrarCategorias.vue";
 
