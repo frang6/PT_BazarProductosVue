@@ -1,52 +1,93 @@
 <template>
-    <div>
-        <h2>Resultados para "{{ busqueda }}"</h2>
-        <div v-if="loading">Cargando...</div>
-        <div v-else-if="error" class="error">{{ error }}</div>
-        <div v-else>
-            <ul v-if="productos.length">
-                <li v-for="producto in productos" :key="producto.id" class="producto">
-                    <h3>{{ producto.title }}</h3>
-                    <p>{{ producto.description }}</p>
-                    <strong>Categoría: {{ producto.category }}</strong>
-                    <p>Precio: ${{ producto.price }}</p>
-                </li>
-            </ul>
-            <p v-else>No se encontraron productos.</p>
+    <header>
+        <img src="../assets/img/logo.png" alt="Logo" @click="volverAInicio" class="logo" />
+        <Busqueda v-model="busqueda" />
+    </header>
+
+    <nav>
+        <h3 v-if="busqueda">Resultados para "{{ busqueda }}": "{{ productos.length }}"</h3>
+    </nav>
+
+    <main>
+        <div class="manejoExcepciones">
+            <p v-if="loading">Cargando productos...</p>
+            <p v-else-if="error" class="error">{{ error }}</p>
+            <p v-else-if="productos.length === 0">No se encontraron productos.</p> 
         </div>
-    </div>
+        
+        
+        <div class="products-container">
+            <ProductCard 
+                v-for="producto in productos" 
+                :key="producto.id" 
+                :producto="producto" 
+            />
+        </div>
+            
+        
+    </main>
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect } from "vue";
-import axios from "axios"; // Importamos axios
+import { ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import axios from "axios";
+import Busqueda from "./Busqueda.vue";
+import ProductCard from "./CartaProducto.vue";
 
-const props = defineProps<{ busqueda: string }>();
+const route = useRoute();
+const router = useRouter();
+
+const busqueda = ref(route.query.q?.toString() || ""); // Permite editar el campo de búsqueda
 const productos = ref<any[]>([]);
 const loading = ref(false);
 const error = ref<string | null>(null);
 
 const fetchProductos = async () => {
-    if (!props.busqueda) return;
+    if (!busqueda.value.trim()) {
+        productos.value = [];
+        return;
+    }
 
     loading.value = true;
     error.value = null;
 
     try {
-        const response = await axios.get(`/api/items?q=${encodeURIComponent(props.busqueda)}`);
+        const response = await axios.get(`http://localhost:3000/api/items?q=${encodeURIComponent(busqueda.value)}`);
         productos.value = response.data;
-    } catch (err: any) {
+    } catch (err) {
         error.value = "Error al obtener productos";
     } finally {
         loading.value = false;
     }
 };
 
-// Llamar a la API cuando cambia la búsqueda
-watchEffect(fetchProductos);
+const volverAInicio = () => {
+    router.push({ path: "/" });
+};
+
+
+const buscar = () => {
+    if (busqueda.value.trim()) {
+        router.push({ query: { q: busqueda.value } }); // Actualiza la URL sin cambiar de página
+    }
+};
+
+// Observar cambios en la búsqueda y actualizar resultados
+watch(busqueda, fetchProductos, { immediate: true });
+watch(() => route.query.q, (newQ) => {
+    busqueda.value = newQ?.toString() || "";
+    fetchProductos();
+});
 </script>
 
 <style scoped>
+
+.logo {
+    cursor: pointer; 
+    width: 100px; 
+}
+
 h2 {
     text-align: center;
     margin-top: 20px;
@@ -57,12 +98,11 @@ ul {
     padding: 0;
 }
 
-.producto {
-    background: #f9f9f9;
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.products-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
 }
 
 .error {

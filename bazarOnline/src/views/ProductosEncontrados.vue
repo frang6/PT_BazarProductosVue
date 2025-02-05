@@ -10,5 +10,5 @@ import { useRoute } from "vue-router";
 import ResultadosBusqueda from "../components/ResultadosBusqueda.vue";
 
 const route = useRoute();
-const busqueda = computed(() => route.query.q as string || '');
+const busqueda = computed(() => route.query.q?.toString() || "");
 </script>
