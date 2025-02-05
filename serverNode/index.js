@@ -53,7 +53,7 @@ app.get("/api/items", (req, res) => {
     res.json(filteredProducts);
 });
 
-// Ruta para obtener un producto por su ID
+
 app.get("/api/items/:id", (req, res) => {
     const { id } = req.params;
     const products = loadProducts();
@@ -66,6 +66,7 @@ app.get("/api/items/:id", (req, res) => {
 
     res.json(product);
 });
+
 
 // Iniciar el servidor
 app.listen(PORT, () => {

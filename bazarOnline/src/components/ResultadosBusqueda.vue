@@ -5,7 +5,15 @@
     </header>
 
     <nav>
-        <h3 v-if="busqueda">Resultados para "{{ busqueda }}": "{{ productos.length }}"</h3>
+        <h3 v-if="busqueda">Resultados para "{{ busqueda }}": {{ productos.length }}</h3>
+        <div class="products-category">
+            <MostrarCategorias 
+                v-for="(cantidad, categoria) in categoriasContadas"  
+                :key="categoria" 
+                :categoria="categoria" 
+                :cantidad="cantidad"
+            />
+        </div>
     </nav>
 
     <main>
@@ -29,16 +37,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 import Busqueda from "./Busqueda.vue";
 import ProductCard from "./CartaProducto.vue";
 
+import MostrarCategorias from "./MostrarCategorias.vue";
+
+
 const route = useRoute();
 const router = useRouter();
 
-const busqueda = ref(route.query.q?.toString() || ""); // Permite editar el campo de búsqueda
+const busqueda = ref(route.query.q?.toString() || ""); 
 const productos = ref<any[]>([]);
 const loading = ref(false);
 const error = ref<string | null>(null);
@@ -53,7 +64,7 @@ const fetchProductos = async () => {
     error.value = null;
 
     try {
-        const response = await axios.get(`http://localhost:3000/api/items?q=${encodeURIComponent(busqueda.value)}`);
+        const response = await axios.get(`http://localhost:3000/api/items?q=${busqueda.value}`);
         productos.value = response.data;
     } catch (err) {
         error.value = "Error al obtener productos";
@@ -73,7 +84,18 @@ const buscar = () => {
     }
 };
 
-// Observar cambios en la búsqueda y actualizar resultados
+// Computed para contar las categorías
+const categoriasContadas = computed(() => {
+    const contador: Record<string, number> = {};
+    productos.value.forEach((producto) => {
+        if (producto.category) {
+            contador[producto.category] = (contador[producto.category] || 0) + 1;
+        }
+    });
+    return contador;
+});
+
+// Metodos para coger los cambios de la búsqueda y actualizar los productos encontrados
 watch(busqueda, fetchProductos, { immediate: true });
 watch(() => route.query.q, (newQ) => {
     busqueda.value = newQ?.toString() || "";
@@ -86,6 +108,21 @@ watch(() => route.query.q, (newQ) => {
 .logo {
     cursor: pointer; 
     width: 100px; 
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(to bottom, rgb(236, 177, 169), rgb(255, 255, 255));
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+}
+
+nav{
+    margin: 20px;
+    padding: 10px;
 }
 
 h2 {

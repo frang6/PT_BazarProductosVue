@@ -3,10 +3,7 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-  <div id="app">
-    <!-- Aquí se mostrará la vista según la ruta activa -->
     <RouterView />
-  </div>
 </template>
 
 <style scoped>
