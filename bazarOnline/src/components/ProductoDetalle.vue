@@ -22,7 +22,7 @@
             <strong>Precio: {{ producto.price }}€</strong>
             <span class="rating">⭐ {{ producto.rating }}</span>
             <p>{{ producto.description }}</p>
-            <BotonAñadirCarrito @click="añadirAlCarrito" />
+            <BotonAnadirCarrito @click="añadirAlCarrito" />
         </div>
     </main>
 </template>
@@ -33,7 +33,7 @@ import { useRoute, useRouter } from "vue-router";
 import { useToast } from "vue-toastification";
 import Busqueda from "./Busqueda.vue";
 import axios from "axios";
-import BotonAñadirCarrito from "./BotonAñadirCarrito.vue";
+import BotonAnadirCarrito  from "./BotonAnadirCarrito.vue";
 import BotonVolverAtras from "./BotonVolverAtras.vue";
 
 const route = useRoute();
@@ -44,7 +44,7 @@ const busqueda = ref(route.query.q?.toString() || "");
 const producto = ref<any>(null);
 const loading = ref(false);
 const error = ref<string | null>(null);
-const carrito = ref(JSON.parse(localStorage.getItem("carrito")) || []);
+const carrito = ref(JSON.parse(localStorage.getItem("carrito") || '[]'));
 
 const fetchProducto = async () => {
     loading.value = true;
@@ -61,10 +61,18 @@ const fetchProducto = async () => {
 };
 
 const añadirAlCarrito = () => {
-    carrito.value.push({ ...producto.value });
-    localStorage.setItem("carrito", JSON.stringify(carrito.value));
-    toast.success("Producto añadido al carrito");
+    if (!producto.value) return;
+
+    // Verificar si el producto ya está en el carrito
+    const existe = carrito.value.find((item: any) => item.id === producto.value.id);
+    
+    if (!existe) {
+        carrito.value.push({ ...producto.value });
+        localStorage.setItem("carrito", JSON.stringify(carrito.value));
+        toast.success("Producto añadido al carrito");
+    } 
 };
+
 
 const volverAInicio = () => {
     router.push({ path: "/" });
