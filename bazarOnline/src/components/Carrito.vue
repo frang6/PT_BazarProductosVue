@@ -21,6 +21,7 @@
         </div>
         <p v-else>El carrito está vacío.</p>
 
+        <BotonComprar class="botonCompra"/>
         
 
         <section>
@@ -78,6 +79,12 @@ const terms = [
 header {
     margin: 10px;
 }
+nav{
+    display: flex;
+    padding: 10px 20px;
+    align-items: center;
+    justify-content: space-between;
+}
 
 .logo {
     cursor: pointer;
@@ -106,7 +113,7 @@ section {
     line-height: 1.6;
     max-width: 600px;
     margin: auto;
-    margin-top: 40%;
+    margin-top: 15%;
 }
 
 h2 {
@@ -125,4 +132,10 @@ ul li {
     margin-bottom: 10px;
     text-align: justify;
 }
+
+.botonCompra{
+    margin-top: 20%;
+    
+}
+
 </style>

@@ -94,13 +94,17 @@ onMounted(fetchProducto);
     cursor: pointer; 
     width: 100px; 
 }
-.volverAtras{
-    margin-top: -10px;
+
+nav{
+    display: flex;
+    padding: 10px 20px;
+    align-items: center;
+    justify-content: space-between;
 }
+
 .logoCarrito{
     cursor: pointer;
     width: 60px;
-    display: flex;
 }
 
 header{
