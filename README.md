@@ -1,30 +1,38 @@
 ## 📖 BazarApp - Full Stack de Bazar
-##  🚀 Proyecto Full Stack - Bazar Virtual 
-# Autor: Fran Garcia 
+
+## 🚀 Proyecto Full Stack - Bazar Virtual 
+
+### Autor: Fran Garcia 
+
 <a href="https://tusitio.netlify.app/](https://67a4d044c2d11e1f660c7294--relaxed-eclair-eeef15.netlify.app/" target="_blank">🌍 Enlace al Sitio Web</a> 
-# 📝 Sobre el Proyecto
+
+## 📝 Sobre el Proyecto
+
 - Este es un proyecto de desarrollo Full Stack para la creación de una aplicación web de un bazar virtual. Su propósito principal es permitir que los usuarios busquen productos, vean los resultados de búsqueda y accedan a detalles específicos de cada producto.
 
 - La aplicación incluye dos partes:
+  - **Frontend** - Cliente realizado en Vue.js con Typescript.
+  - **Backend** - API RESTful con Node.JS para gestionar las consultas de los productos.
 
-- Frontend - Cliente realizado en Vue.js con Typescript.
-- Backend - API RESTful con Node.JS para gestionar las consultas de los productos.
-# 🌟 Funcionalidades
-- ✔️ Búsqueda de productos - Los usuarios pueden buscar productos por nombre.
-- ✔️ Resultados de búsqueda - Visualización de productos filtrados con detalles como título, precio, categoría, imagen y puntuación.
-- ✔️ Vista de detalles del producto - Información completa de cada producto seleccionado, incluyendo precio, stock, y más.
-- ✔️ Paginación - Resultados paginados para una navegación más fluida en búsquedas con muchos productos.
-- ✔️ API RESTful - El servidor proporciona dos endpoints principales para obtener productos.
-- ✔️ Diseño responsivo - La aplicación está optimizada para dispositivos móviles.
+## 🌟 Funcionalidades
 
-#🔧 Tecnologías Implementadas
-- 🎯 Vue.js 3 - Framework progresivo de JavaScript.
-- 🛠 Typescript - Tipado estático para mejorar la calidad del código.
-- 🔌 Node.JS - Backend para la gestión de productos y resultados de búsqueda.
-- 🎨 CSS personalizado - Estilos adaptados para una experiencia fluida y responsiva.
-- 🔧 Vitest - Herramienta para pruebas unitarias.
+- ✔️ **Búsqueda de productos** - Los usuarios pueden buscar productos por nombre.
+- ✔️ **Resultados de búsqueda** - Visualización de productos filtrados con detalles como título, precio, categoría, imagen y puntuación.
+- ✔️ **Vista de detalles del producto** - Información completa de cada producto seleccionado, incluyendo precio, stock, y más.
+- ✔️ **Paginación** - Resultados paginados para una navegación más fluida en búsquedas con muchos productos.
+- ✔️ **API RESTful** - El servidor proporciona dos endpoints principales para obtener productos.
+- ✔️ **Diseño responsivo** - La aplicación está optimizada para dispositivos móviles.
 
-# ⚙️ Instalación y Ejecución como Desarrollador
+## 🔧 Tecnologías Implementadas
+
+- 🎯 **Vue.js 3** - Framework progresivo de JavaScript.
+- 🛠 **Typescript** - Tipado estático para mejorar la calidad del código.
+- 🔌 **Node.JS** - Backend para la gestión de productos y resultados de búsqueda.
+- 🎨 **CSS personalizado** - Estilos adaptados para una experiencia fluida y responsiva.
+- 🔧 **Vitest** - Herramienta para pruebas unitarias.
+
+## ⚙️ Instalación y Ejecución como Desarrollador
+
 - Para ejecutar este proyecto en tu entorno local, sigue los siguientes pasos:
 
 # 1️⃣ Clona el repositorio:
@@ -68,26 +76,6 @@
 - Método: GET
 - Descripción: Retorna los detalles completos de un producto específico usando su id.
 
-# 🤝 Cómo Contribuir
-- Si deseas colaborar en el proyecto, sigue estos pasos:
-
-- Haz un fork del repositorio.
-- Crea una nueva rama:
-- bash
-- Copiar
-- Editar
-- git checkout -b nueva-funcionalidad
-- Realiza las modificaciones y confirma los cambios:
-- bash
-- Copiar
-- Editar
-- git commit -m "Añadir nueva funcionalidad"
-- Sube los cambios al repositorio remoto:
-- bash
-- Copiar
-- Editar
-- git push origin nueva-funcionalidad
-- Abre un Pull Request en GitHub.
 # 👥 Equipo y Colaboradores
 # Creador: Fran Garcia [@frang6]
 
@@ -97,8 +85,8 @@
 
 # 🌟 ¡Gracias por tu interés en este proyecto! 💙
 ** Ajustes claves: **
-Enfoque en el Bazar Virtual: Cambié los detalles del proyecto para reflejar que ahora estás trabajando en una aplicación de productos con búsqueda, detalles y API.
-Detalles de Rutas y Funcionalidades: Agregué la descripción de las tres páginas y los endpoints requeridos.
-Backend: Incluí una sección para ejecutar el backend, lo cual es necesario para la funcionalidad de la API.
-SEO y Compartir en Redes Sociales: Considerando los requerimientos adicionales del ejercicio, resalté el diseño responsivo y la importancia de un buen SEO.
-Este README refleja ahora tanto la estructura básica del proyecto como las nuevas funcionalidades del bazar y la API RESTful que necesitas implementar.
+- Enfoque en el Bazar Virtual: Cambié los detalles del proyecto para reflejar que ahora estás trabajando en una aplicación de productos con búsqueda, detalles y API.
+- Detalles de Rutas y Funcionalidades: Agregué la descripción de las tres páginas y los endpoints requeridos.
+- Backend: Incluí una sección para ejecutar el backend, lo cual es necesario para la funcionalidad de la API.
+- SEO y Compartir en Redes Sociales: Considerando los requerimientos adicionales del ejercicio, resalté el diseño responsivo y la importancia de un buen SEO.
+- Este README refleja ahora tanto la estructura básica del proyecto como las nuevas funcionalidades del bazar y la API RESTful que necesitas implementar.
