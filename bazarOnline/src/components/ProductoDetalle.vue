@@ -35,6 +35,7 @@ import Busqueda from "./Busqueda.vue";
 import axios from "axios";
 import BotonAnadirCarrito  from "./BotonAnadirCarrito.vue";
 import BotonVolverAtras from "./BotonVolverAtras.vue";
+import API_BASE_URL from '@/config.ts';
 
 const route = useRoute();
 const router = useRouter();
@@ -51,7 +52,7 @@ const fetchProducto = async () => {
     error.value = null;
 
     try {
-        const response = await axios.get(`http://localhost:3000/api/items/${route.params.id}`);
+        const response = await axios.get(`${API_BASE_URL}/items/${route.params.id}`);
         producto.value = response.data;
     } catch (err) {
         error.value = "Error al obtener el producto";

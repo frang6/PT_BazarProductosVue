@@ -42,6 +42,7 @@ import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 import Busqueda from "./Busqueda.vue";
 import CartaProducto from "./CartaProducto.vue";
+import API_BASE_URL from '@/config.ts';
 
 import MostrarCategorias from "./MostrarCategorias.vue";
 
@@ -64,7 +65,7 @@ const fetchProductos = async () => {
     error.value = null;
 
     try {
-        const response = await axios.get(`http://localhost:3000/api/items?q=${busqueda.value}`);
+        const response = await axios.get(`${API_BASE_URL}/items?q=${busqueda.value}`);
         productos.value = response.data;
     } catch (err) {
         error.value = "Error al obtener productos";
