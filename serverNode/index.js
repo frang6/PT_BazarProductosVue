@@ -30,6 +30,7 @@ function loadProducts() {
     }
 }
 
+
 // Ruta de prueba
 app.get("/", (req, res) => {
     res.send("Servidor funcionando correctamente 🚀");
