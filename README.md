@@ -4,7 +4,7 @@
 
 ### Autor: Fran Garcia 
 
-<a href="https://tusitio.netlify.app/](https://67a4d044c2d11e1f660c7294--relaxed-eclair-eeef15.netlify.app/" target="_blank">🌍 Enlace al Sitio Web</a> 
+<a href="https://67a4d044c2d11e1f660c7294--relaxed-eclair-eeef15.netlify.app" target="_blank">🌍 Enlace al Sitio Web</a> 
 
 ## 📝 Sobre el Proyecto
 
